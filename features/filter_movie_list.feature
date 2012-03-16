@@ -22,14 +22,27 @@ Background: movies have been added to database
   And  I am on the RottenPotatoes home page
   
 Scenario: restrict to movies with 'PG' or 'R' ratings
-  # enter step(s) to check the 'PG' and 'R' checkboxes
-  # enter step(s) to uncheck all other checkboxes
-  # enter step to "submit" the search form on the homepage
-  # enter step(s) to ensure that PG and R movies are visible
-  # enter step(s) to ensure that other movies are not visible
+  When I am on the RottenPotatoes home page
+  When I check "ratings_PG"  
+  When I check "ratings_R" 
+  When I uncheck "ratings_PG-13"  
+  When I uncheck "ratings_G" 
+  When I press "ratings_submit"
+  Then I should see "The Incredibles"
+  Then I should see "Amelie"
+  Then I should not see "Chicken Run"
+  Then I should not see "The Help"
 
 Scenario: no ratings selected
-  # see assignment
+  When I am on the RottenPotatoes home page
+  When I uncheck "ratings_PG"  
+  When I uncheck "ratings_R" 
+  When I uncheck "ratings_PG-13"  
+  When I uncheck "ratings_G" 
+  Then I should not see "The Incredibles"
+  Then I should not see "Amelie"
+  Then I should not see "Chicken Run"
+  Then I should not see "The Help"
 
 Scenario: all ratings selected
   # see assignment
