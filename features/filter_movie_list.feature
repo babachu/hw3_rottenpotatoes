@@ -23,26 +23,25 @@ Background: movies have been added to database
   
 Scenario: restrict to movies with 'PG' or 'R' ratings
   When I am on the RottenPotatoes home page
-  When I check "ratings_PG"  
-  When I check "ratings_R" 
-  When I uncheck "ratings_PG-13"  
-  When I uncheck "ratings_G" 
-  When I press "ratings_submit"
+  Given I check the following ratings: 'PG','R'
+  Given I uncheck the following ratings: 'PG-13','G'
+  And I press "Refresh"
   Then I should see "The Incredibles"
-  Then I should see "Amelie"
-  Then I should not see "Chicken Run"
-  Then I should not see "The Help"
+  Then I should see "The Terminator"
+  And I should not see "The Help"
+  And I should not see "Chicken Run"
 
 Scenario: no ratings selected
   When I am on the RottenPotatoes home page
-  When I uncheck "ratings_PG"  
-  When I uncheck "ratings_R" 
-  When I uncheck "ratings_PG-13"  
-  When I uncheck "ratings_G" 
+  Given I uncheck the following ratings: 'PG','G','PG-13','R'
+  And I press "ratings_submit"
   Then I should not see "The Incredibles"
   Then I should not see "Amelie"
   Then I should not see "Chicken Run"
   Then I should not see "The Help"
 
 Scenario: all ratings selected
-  # see assignment
+  When I am on the RottenPotatoes home page
+  Given I check the following ratings: 'PG','G','R','PG-13'
+  When I press "Refresh"
+  Then I should see all of the movies
